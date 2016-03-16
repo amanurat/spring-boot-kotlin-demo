@@ -1,0 +1,64 @@
+#datasource:
+#  primary:
+#    url: jdbc:mysql://localhost:3306/test
+#    username: root
+#    password: MySQL123456
+#    driver-class-name: com.mysql.jdbc.Driver
+#  secondary:
+#    url: jdbc:mysql://localhost:3366/test
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+
+#when write, the database engine should be InnoDB
+modify.datasource:
+  url: jdbc:mysql://localhost:3306/test
+  username: root
+  password: MySQL123456
+  driver-class-name: com.mysql.jdbc.Driver
+
+#when read, the database engine should be MyISAM
+query.datasource:
+  url: jdbc:mysql://localhost:3366/test
+  username: root
+  password: 123456
+  driver-class-name: com.mysql.jdbc.Driver
+
+#spring.datasource.url=jdbc:mysql:replication://localhost:3306/test
+#spring.datasource.username=root
+#spring.datasource.password=MySQL123456
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+# MONGODB (MongoProperties)
+spring:
+  data.mongodb:
+    authentication-database: Admin
+    password: admin
+# Mongo database URI. When set, host and port are ignored master and slave
+    uri: mongodb://admin:@127.0.0.1:20481,127.0.0.1:20482/test
+    username: admin
+  jpa:
+    #generate-ddl: true
+    open-in-view: true
+    show-sql: true
+
+  mvc.static-path-pattern: /**
+
+
+#  resources.chain.strategy:
+#    content:
+#      enabled:  true
+#      paths: /**
+#    fixed:
+#      enabled: true
+#      paths: /js/lib/
+#      version: v1
+
+#server
+server:
+  port: 8888
+  session:
+    cookie.http-only: true
+    timeout: 600
+  error.whitelabel.enabled: false
+  display-name: demo
