@@ -10,9 +10,15 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven.url "https://repo.spring.io/libs-release"
-        maven.url "http://repo.spring.io/snapshot"
-        maven.url "http://repo.spring.io/milestone"
+        maven{
+            url = "https://repo.spring.io/libs-release"
+        }
+        maven{
+            url = "http://repo.spring.io/snapshot"
+        }
+        maven{
+            url = "http://repo.spring.io/milestone"
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0"
