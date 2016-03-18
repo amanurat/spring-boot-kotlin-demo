@@ -12,18 +12,18 @@ import javax.sql.DataSource
  */
 
 @Configuration
-class DataSourceConfig {
+open class DataSourceConfig {
 
     @Bean
     @Primary
     @ConfigurationProperties(prefix = "modify.datasource")
-    fun modifyDataSource(): DataSource {
+    open fun modifyDataSource(): DataSource {
         return DataSourceBuilder.create().build()
     }
 
     @Bean
     @ConfigurationProperties(prefix = "query.datasource")
-    fun queryDataSource(): DataSource {
+    open fun queryDataSource(): DataSource {
         return DataSourceBuilder.create().build()
     }
 

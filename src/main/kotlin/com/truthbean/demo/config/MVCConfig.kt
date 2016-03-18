@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @Configuration
-class MVCConfig : WebMvcConfigurerAdapter() {
+open class MVCConfig : WebMvcConfigurerAdapter() {
 
     override fun addViewControllers(registry: ViewControllerRegistry?) {
         registry!!.addViewController("/home.html").setViewName("home")
@@ -45,7 +45,7 @@ class MVCConfig : WebMvcConfigurerAdapter() {
     }*/
 
     @Bean
-    fun corsConfigurer(): WebMvcConfigurer {
+    open fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurerAdapter() {
             override fun addCorsMappings(registry: CorsRegistry?) {
                 registry!!.addMapping("/api/**")

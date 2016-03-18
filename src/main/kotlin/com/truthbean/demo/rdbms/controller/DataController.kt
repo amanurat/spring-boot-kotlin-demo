@@ -10,21 +10,23 @@ import org.springframework.web.bind.annotation.*
  * Created by TruthBean on 2016/3/16 0016.
  */
 @RestController
-class DataController @Autowired constructor(val userService: QueryDemoUserService) {
+open class DataController() {
 
-    val allMySQLDemoUsersForList: List<QueryDemoUser>
+    @Autowired lateinit var userService: QueryDemoUserService
+
+    val allMySQLDemoUsersForList: List<QueryDemoUser>?
         @RequestMapping("/demo/user/mysql/all")
-        get() = userService!!.all
+        get() = userService.all
 
     @RequestMapping(value = "/demo/user/mysql/page", method = arrayOf(RequestMethod.POST))
     fun getSomeMySQLDemoUsersForListByPage(@RequestParam(name = "size", defaultValue = "20") size: Int,
-                                           @RequestParam(name = "current", defaultValue = "1") current: Int): Page<QueryDemoUser> {
-        return userService!!.getAllByPage(current, size)
+                                           @RequestParam(name = "current", defaultValue = "1") current: Int): Page<QueryDemoUser>? {
+        return userService.getAllByPage(current, size)
     }
 
     @RequestMapping(value = "/demo/user/mysql/{current}", method = arrayOf(RequestMethod.POST))
     fun getSomeMySQLDemoUsersForPages(@PathVariable current: Int,
-                                      @RequestParam(name = "size", defaultValue = "20") size: Int): Page<QueryDemoUser> {
-        return userService!!.getAllByPage(current, size)
+                                      @RequestParam(name = "size", defaultValue = "20") size: Int): Page<QueryDemoUser>? {
+        return userService.getAllByPage(current, size)
     }
 }

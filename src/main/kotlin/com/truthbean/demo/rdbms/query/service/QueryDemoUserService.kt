@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.security.crypto.password.StandardPasswordEncoder
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 /**
@@ -16,24 +17,27 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Transactional(readOnly = true)
 @CacheConfig(cacheNames = arrayOf("users"))
-class QueryDemoUserService
-    @Autowired constructor(val queryRepository: QueryDemoUserRepository)
-{
+@Service
+open class QueryDemoUserService{
+
+    @Autowired lateinit var queryRepository: QueryDemoUserRepository
+
     private val passwordEncoder = StandardPasswordEncoder()
 
     @Cacheable(key = "#uuid")
-    fun getById(uuid: String): QueryDemoUser {
-        return queryRepository!!.findOne(uuid)
+    open fun getById(uuid: String): QueryDemoUser? {
+        return queryRepository?.findOne(uuid)
     }
 
     @Cacheable
-    fun getAllByPage(current: Int, size: Int): Page<QueryDemoUser> {
+    open fun getAllByPage(current: Int, size: Int): Page<QueryDemoUser>? {
         val sort = Sort(Sort.Direction.ASC, "demo_user_id") //按id升序排列
         val page = PageRequest(current, size, sort)
-        return queryRepository!!.findAll(page)
+        return queryRepository?.findAll(page)
     }
 
-    val all: List<QueryDemoUser>
+    open val all: List<QueryDemoUser>?
         @Cacheable
-        get() = queryRepository!!.findAll()
+        get() = queryRepository?.findAll()
+
 }

@@ -20,8 +20,8 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "modifyEntityManagerFactory", transactionManagerRef = "modifyTransactionManager", basePackages = arrayOf("com.truthbean.demo.MySQL.persistence.repository.modify")) //设置dao（repo）所在位置
-class ModifyConfiguration {
+@EnableJpaRepositories(entityManagerFactoryRef = "modifyEntityManagerFactory", transactionManagerRef = "modifyTransactionManager", basePackages = arrayOf("com.truthbean.demo.rdbms.modify.persistence.repository")) //设置dao（repo）所在位置
+open class ModifyConfiguration {
 
     @Autowired
     @Qualifier("modifyDataSource")
@@ -29,20 +29,20 @@ class ModifyConfiguration {
 
     @Bean
     @Primary
-    fun modifyEntityManager(builder: EntityManagerFactoryBuilder): EntityManager {
+    open fun modifyEntityManager(builder: EntityManagerFactoryBuilder): EntityManager {
         return modifyEntityManagerFactory(builder).`object`.createEntityManager()
     }
 
     @Bean
     @Primary
-    fun modifyEntityManagerFactory(
+    open fun modifyEntityManagerFactory(
             builder: EntityManagerFactoryBuilder): LocalContainerEntityManagerFactoryBean {
-        return builder.dataSource(modifyDataSource).packages("com.truthbean.demo.MySQL.persistence.domain.modify").persistenceUnit("modify").build()
+        return builder.dataSource(modifyDataSource).packages("com.truthbean.demo.rdbms.modify.persistence.domain").persistenceUnit("modify").build()
     }
 
     @Bean
     @Primary
-    internal fun modifyTransactionManager(builder: EntityManagerFactoryBuilder): PlatformTransactionManager {
+    open internal fun modifyTransactionManager(builder: EntityManagerFactoryBuilder): PlatformTransactionManager {
         return JpaTransactionManager(modifyEntityManagerFactory(builder).`object`)
     }
 

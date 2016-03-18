@@ -1,13 +1,12 @@
 package com.truthbean.demo.core.controller
 
+import com.truthbean.demo.mix.core.util.isNumeric
 import org.springframework.boot.autoconfigure.web.ErrorController
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import javax.servlet.http.HttpServletRequest
-import com.truthbean.demo.mix.core.util.isNumeric
 
 /**
  * Created by TruthBean on 2016/3/16 0016.

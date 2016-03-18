@@ -12,18 +12,18 @@ import java.util.logging.Logger
 
 @Aspect
 @Component
-class ActionMonitor {
+open class ActionMonitor {
 
     @AfterReturning("execution(* com.truthbean.demo..*Service.*(..))")
     @Throws(Exception::class)
-    fun logServiceAccess(joinPoint: JoinPoint) {
+    open fun logServiceAccess(joinPoint: JoinPoint) {
         logger.warning("Completed: " + joinPoint)
         //throw new RuntimeException(joinPoint.toLongString());
     }
 
     @AfterReturning("execution(* *.*Controller.*(..))")
     @Throws(Exception::class)
-    fun logControllerAccess(joinPoint: JoinPoint) {
+    open fun logControllerAccess(joinPoint: JoinPoint) {
         logger.warning("Completed: " + joinPoint)
         //throw new RuntimeException(joinPoint.toLongString());
     }

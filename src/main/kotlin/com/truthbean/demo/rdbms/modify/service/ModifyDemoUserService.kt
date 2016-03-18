@@ -16,15 +16,15 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Service
 @Transactional(rollbackFor = arrayOf(RuntimeException::class))
-class ModifyDemoUserService {
+open class ModifyDemoUserService {
 
     @Autowired
-    private val userRepository: ModifyDemoUserRepository? = null
+    lateinit var userRepository: ModifyDemoUserRepository
 
     private val passwordEncoder = StandardPasswordEncoder()
 
     @CachePut(cacheNames = arrayOf("user"), key = "#demoUser.userUUID")
-    fun save(demoUser: ModifyDemoUser): ModifyDemoUser? {
+    open fun save(demoUser: ModifyDemoUser): ModifyDemoUser? {
         var demoUser = demoUser
         if (isEmpty(demoUser.userUUID)) {
             demoUser.userPassword = passwordEncoder.encode(demoUser.userPassword)
@@ -35,7 +35,7 @@ class ModifyDemoUserService {
     }
 
     @CachePut(cacheNames = arrayOf("user"), key = "#demoUser.userUUID")
-    fun update(demoUser: ModifyDemoUser): ModifyDemoUser? {
+    open fun update(demoUser: ModifyDemoUser): ModifyDemoUser? {
         var demoUser = demoUser
         if (isNotEmpty(demoUser.userUUID)) {
             demoUser.userUUID = null
@@ -48,9 +48,9 @@ class ModifyDemoUserService {
 
     //@CacheEvict(cacheNames="user", allEntries=true)
     @CacheEvict(cacheNames = arrayOf("user"), key = "#uuid")
-    fun delete(uuid: String): Boolean {
+    open fun delete(uuid: String): Boolean {
         userRepository!!.delete(uuid)
-        val tmp = userRepository!!.findOne(uuid)
+        val tmp = userRepository.findOne(uuid)
         return tmp == null
     }
 

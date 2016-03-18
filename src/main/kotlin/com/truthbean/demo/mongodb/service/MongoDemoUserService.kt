@@ -14,7 +14,7 @@ import java.math.BigInteger
 
 @Service
 @Transactional(readOnly = true)
-class MongoDemoUserService {
+open class MongoDemoUserService {
 
     @Autowired
     private val demoUserRepository: MongoDemoUserReponsitory? = null
@@ -39,7 +39,7 @@ class MongoDemoUserService {
     @Transactional
     fun delete(id: BigInteger): Boolean {
         demoUserRepository!!.delete(id)
-        val tmp = demoUserRepository!!.findOne(id)
+        val tmp = demoUserRepository.findOne(id)
         return tmp == null
     }
 

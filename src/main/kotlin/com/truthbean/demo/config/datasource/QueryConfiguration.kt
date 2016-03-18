@@ -19,28 +19,28 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "queryEntityManagerFactory", transactionManagerRef = "queryTransactionManager", basePackages = arrayOf("com.truthbean.demo.MySQL.persistence.repository.query")) //设置dao（repo）所在位置
-class QueryConfiguration {
+@EnableJpaRepositories(entityManagerFactoryRef = "queryEntityManagerFactory", transactionManagerRef = "queryTransactionManager", basePackages = arrayOf("com.truthbean.demo.rdbms.query.persistence.repository")) //设置dao（repo）所在位置
+open class QueryConfiguration {
 
     @Autowired
     @Qualifier("queryDataSource")
     private val queryDataSource: DataSource? = null
 
     @Bean
-    fun queryEntityManager(builder: EntityManagerFactoryBuilder): EntityManager {
+    open fun queryEntityManager(builder: EntityManagerFactoryBuilder): EntityManager {
         return queryEntityManagerFactory(builder).`object`.createEntityManager()
     }
 
     @Bean
-    fun queryEntityManagerFactory(
+    open fun queryEntityManagerFactory(
             builder: EntityManagerFactoryBuilder): LocalContainerEntityManagerFactoryBean {
         return builder.dataSource(queryDataSource)
-                .packages("com.truthbean.demo.MySQL.persistence.domain.query")
+                .packages("com.truthbean.demo.rdbms.query.persistence.domain")
                 .persistenceUnit("query").build()
     }
 
     @Bean
-    internal fun queryTransactionManager(builder: EntityManagerFactoryBuilder): PlatformTransactionManager {
+    open internal fun queryTransactionManager(builder: EntityManagerFactoryBuilder): PlatformTransactionManager {
         return JpaTransactionManager(queryEntityManagerFactory(builder).`object`)
     }
 
